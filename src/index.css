@@ -87,6 +87,10 @@ pre {
   margin-bottom: 1rem;
 }
 
+.mt-2 {
+  margin-top: 2rem;
+}
+
 .type {
   font-weight: 600;
   font-size: 15px;
@@ -95,6 +99,37 @@ pre {
   padding: 4px 5px;
   border-radius: 6px;
   text-transform: uppercase;
-  background-color: #3387CC;
+  background-color: #3387cc;
   color: #ffffff;
+}
+
+pre.language-json {
+  overflow: auto;
+}
+pre.prettyprint {
+  width: 100%;
+  margin: 1em auto;
+  padding: 1em;
+  white-space: pre-wrap;
+}
+
+pre .pln,
+code .pln {
+  color: #fff;
+}
+pre .lit,
+code .lit {
+  color: #3387cc;
+}
+pre .lit,
+code .lit {
+  color: #3387cc;
+}
+pre .str,
+code .str {
+  color: #65b042;
+}
+
+input.invalid {
+  border-color: red !important;
 }

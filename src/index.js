@@ -7,6 +7,7 @@ import rootReducer from "./reducers/rootReducer";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(

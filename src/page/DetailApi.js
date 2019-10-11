@@ -3,6 +3,9 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { formatURL } from "../untils/untils";
 import CustomizedTables from "../components/baseComponent/CustomizedTables/CustomizedTables";
+import FullWidthTabs from "../components/baseComponent/FullWidthTabs/FullWidthTabs";
+import { InputGroup, FormControl } from "react-bootstrap";
+import Button from "@material-ui/core/Button";
 
 class DetailApi extends Component {
   constructor(props) {
@@ -17,20 +20,12 @@ class DetailApi extends Component {
     this.state = {
       action,
       title,
-      body: [
-        {
-          field: "grant_type",
-          type: "String",
-          description: "required"
-        },
-        {
-          field: "scope",
-          type: "String",
-          description: "option"
-        }
-      ]
+      body: action.body,
+      reponseSuccessExample: action.reponseSuccessExample,
+      responseFail: action.responseFail
     };
   }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       nextProps.match.params.parentIndex !==
@@ -46,11 +41,29 @@ class DetailApi extends Component {
       });
       this.setState({
         action,
-        title
+        title,
+        body: action.body,
+        reponseSuccessExample: action.reponseSuccessExample,
+        responseFail: action.responseFail
       });
     }
   }
-  _renderContent() {}
+  _onSend = () => {
+    let flag = true;
+    this.state.body.forEach(item => {
+      if (item.required) {
+        if (document.getElementById(item.field).value === "") {
+          document.getElementById(item.field).classList.add("invalid");
+          flag = false;
+        } else {
+          document.getElementById(item.field).classList.remove("invalid");
+        }
+      }
+    });
+    if (flag) {
+      alert("asdf");
+    }
+  };
   render() {
     return (
       <div className="DetailApi">
@@ -79,13 +92,38 @@ class DetailApi extends Component {
             />
           </div>
         </div>
-        <div className="table-group">
-          <h5>Success</h5>
-          <div className="table-responsive">
-            <CustomizedTables
-              header={["Field", "Type", "Description"]}
-              body={this.state.body}
-            />
+        <div className="respone-demo mt-2">
+          <FullWidthTabs
+            successExample={this.state.reponseSuccessExample}
+            errorExample={this.state.responseFail}
+          />
+        </div>
+        <div className="sample-request">
+          <h5>Send a Sample Request</h5>
+          {this.state.body.map((item, index) => {
+            return (
+              <InputGroup className="mb-3" key={index}>
+                <label htmlFor="">{item.field}</label>
+                <FormControl
+                  className="ml-3"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                  id={item.field}
+                  size="sm"
+                />
+                <InputGroup.Append>
+                  <InputGroup.Text id="basic-addon2">
+                    {item.type}
+                  </InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+            );
+          })}
+
+          <div className="d-flex flex-row-reverse">
+            <Button variant="contained" color="primary" onClick={this._onSend}>
+              SEND
+            </Button>
           </div>
         </div>
       </div>
