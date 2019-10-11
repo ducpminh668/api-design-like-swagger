@@ -120,7 +120,6 @@ class DetailApi extends Component {
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                   id={item.field}
-                  size="sm"
                 />
                 <InputGroup.Append>
                   <InputGroup.Text id="basic-addon2">
