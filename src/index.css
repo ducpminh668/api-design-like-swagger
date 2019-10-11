@@ -133,3 +133,7 @@ code .str {
 input.invalid {
   border-color: red !important;
 }
+pre.prettyprint,
+code.prettyprint {
+  color: #fff !important;
+}

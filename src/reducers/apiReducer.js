@@ -1,5 +1,5 @@
 const initialState = {
-  baseURL: "http://45.117.171.254:81/",
+  baseURL: "http://45.117.171.254:81/api/",
   apiData: [
     {
       id: "1",
@@ -9,7 +9,7 @@ const initialState = {
           id: "1",
           name: "Login User",
           description: "Api to login user",
-          url: "login",
+          url: "auth/login",
           method: "POST",
           body: [
             {
@@ -94,11 +94,15 @@ const initialState = {
         }
       ]
     }
-  ]
+  ],
+  response: null
 };
 
 const apiReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "SEND_SUCCESS": {
+      return { ...state, response: action.data };
+    }
     default:
       return { ...state };
   }

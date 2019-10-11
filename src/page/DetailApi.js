@@ -6,6 +6,8 @@ import CustomizedTables from "../components/baseComponent/CustomizedTables/Custo
 import FullWidthTabs from "../components/baseComponent/FullWidthTabs/FullWidthTabs";
 import { InputGroup, FormControl } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
+import { sendRequest } from "../actions";
+import ReactJson from "react-json-view";
 
 class DetailApi extends Component {
   constructor(props) {
@@ -61,7 +63,16 @@ class DetailApi extends Component {
       }
     });
     if (flag) {
-      alert("asdf");
+      const data = {};
+      const method = this.state.action.method;
+      const url = formatURL(
+        this.props.apiReducer.baseURL,
+        this.state.action.url
+      );
+      this.state.body.forEach(item => {
+        data[item.field] = document.getElementById(item.field).value;
+      });
+      this.props.sendRequest({ data, method, url });
     }
   };
   render() {
@@ -125,6 +136,25 @@ class DetailApi extends Component {
               SEND
             </Button>
           </div>
+
+          <div className="response">
+            {this.props.apiReducer.response ? (
+              <pre
+                className="prettyprint language-json prettyprinted"
+                data-type="json"
+              >
+                <div>Status: {this.props.apiReducer.response.statusCode}</div>
+                <div>
+                  Message: {this.props.apiReducer.response.statusMessage}
+                </div>
+                Response:
+                <ReactJson
+                  src={this.props.apiReducer.response.body}
+                  theme="monokai"
+                />
+              </pre>
+            ) : null}
+          </div>
         </div>
       </div>
     );
@@ -137,7 +167,13 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    sendRequest: data => dispatch(sendRequest(data))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withRouter(DetailApi));
